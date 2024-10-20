@@ -17,8 +17,9 @@ const RankScreen: React.FC = () => {
     <Box
       bgGradient="linear(to-b, gray.900, purple.900)"
       color="white"
-      minH="100vh"
+      minH="87vh"
       p={4}
+      overflow={"scroll"}
     >
       {/* Top Rank Badge */}
       <Stack align="center" mb={6}>

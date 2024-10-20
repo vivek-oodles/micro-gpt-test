@@ -72,8 +72,9 @@ const HomePage = () => {
         display="flex"
         flexDirection="column"
       >
+        <VStack></VStack>
         {activePage === "home" && (
-          <VStack>
+          <>
             <Flex
               justifyContent="center"
               alignItems="center"
@@ -83,11 +84,16 @@ const HomePage = () => {
               mb={4}
               gap={2}
             >
-              <Circle size="40px" bg={"white"} as="button">
+              <Circle
+                size="40px"
+                bg={"#7371FC99"}
+                border={"1px solid"}
+                as="button"
+              >
                 <IconButton
                   icon={<FaChartSimple />}
                   aria-label="Home"
-                  colorScheme="purple"
+                  colorScheme="#CDC1FF"
                   variant="ghost"
                   boxSize={5}
                 />
@@ -105,11 +111,16 @@ const HomePage = () => {
                 <Image src="./1067Coin.png" alt="Coin" boxSize="20px" />
                 <Text fontSize="xs">540,000,000 $MICRO</Text>
               </HStack>
-              <Circle size="40px" bg={"white"} as="button">
+              <Circle
+                size="40px"
+                bg={"#7371FC99"}
+                border={"1px solid"}
+                as="button"
+              >
                 <IconButton
                   icon={<BiWorld />}
                   aria-label="World"
-                  colorScheme="purple"
+                  colorScheme="#CDC1FF"
                   variant="ghost"
                   boxSize={5}
                 />
@@ -138,7 +149,7 @@ const HomePage = () => {
               <Box w="50%">
                 <HStack mb={2}>
                   <Icon as={HiOutlineBolt} color="yellow.400" />
-                  <Text color="white" fontSize="sm">
+                  <Text color="white" fontSize="md" fontWeight={"bold"}>
                     1000/1000
                   </Text>
                 </HStack>
@@ -189,7 +200,7 @@ const HomePage = () => {
             </HStack>
 
             <Spacer />
-          </VStack>
+          </>
         )}
         {renderContent()}
         {/* Bottom Navigation */}

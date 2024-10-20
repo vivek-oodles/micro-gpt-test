@@ -14,9 +14,9 @@ import { FaChevronRight } from "react-icons/fa";
 const EarnScreen: React.FC = () => {
   return (
     <Box
+      minH={"87vh"}
       bgGradient="linear(to-b, gray.900, purple.900)"
       color="white"
-      minH="100vh"
       p={4}
     >
       {/* Key Counter */}

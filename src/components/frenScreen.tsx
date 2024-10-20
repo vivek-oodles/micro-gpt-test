@@ -16,7 +16,7 @@ const FrenScreen: React.FC = () => {
     <Box
       bgGradient="linear(to-b, gray.900, purple.900)"
       color="white"
-      minH="100vh"
+      minH="87vh"
       p={4}
     >
       {/* Key Counter */}
