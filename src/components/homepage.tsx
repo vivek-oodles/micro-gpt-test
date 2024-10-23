@@ -82,7 +82,7 @@ const HomePage = () => {
               borderColor={"linear(to-r, purple.600, orange.400)"}
               borderRadius="full"
               mb={4}
-              gap={2}
+              gap={1}
             >
               <Circle
                 size="40px"
@@ -132,14 +132,14 @@ const HomePage = () => {
                 <Image
                   src="./1067Coin.png" // Replace with actual coin icon URL
                   alt="Coin Icon"
-                  boxSize="60px"
+                  boxSize="50px"
                 />
                 <Text fontSize="6xl" fontWeight="bold" mx={4}>
                   1,067
                 </Text>
               </Flex>
 
-              <Flex justify="space-around" w="100%" maxW="400px">
+              <Flex justify="space-around" w="80%" maxW="400px">
                 <Image src="./coinStack.png" alt="Coins Stack" />
               </Flex>
             </Stack>
