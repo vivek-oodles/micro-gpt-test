@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Flex,
   Circle,
@@ -20,7 +20,30 @@ import { HiOutlineBolt } from "react-icons/hi2";
 import { CiCalendar } from "react-icons/ci";
 import { RxRocket } from "react-icons/rx";
 
+const levelImages: string[] = ["./coinStack.png"];
+
 const HomeScreen: React.FC = () => {
+  const [balance, setBalance] = useState<number>(1067);
+  const [energy, setEnergy] = useState<number>(1000);
+  const [level, setLevel] = useState<number>(1);
+  const [clicks, setClicks] = useState<number>(0);
+
+  useEffect(() => {
+    const newLevel = Math.min(Math.floor(clicks / 1000) + 1, 5);
+    if (newLevel !== level) {
+      setLevel(newLevel);
+      alert();
+      // `Congratulations! You've reached ${
+      //   levelNames[newLevel - 1]
+      // } Mode (Level ${newLevel})!`
+    }
+  }, [clicks, level]);
+
+  const handleTap = (): void => {
+    setBalance((prev) => prev + 1);
+    setEnergy((prev) => Math.max(0, prev - 1));
+    setClicks((prev) => prev + 1);
+  };
   return (
     <Flex
       justifyContent="center"
@@ -69,12 +92,23 @@ const HomeScreen: React.FC = () => {
         <Flex alignItems="center" justifyContent="center">
           <Image src="./1067Coin.png" alt="Coin Icon" boxSize="50px" />
           <Text fontSize="6xl" fontWeight="bold" mx={4}>
-            1,067
+            {balance.toLocaleString()}
           </Text>
         </Flex>
 
         <Flex w="100%">
-          <Image src="./coinStack.png" alt="Coins Stack" />
+          <Box
+            bg="purple.700"
+            as="button"
+            onClick={handleTap}
+            _hover={{ bg: "purple.500" }}
+            _active={{ bg: "cyan.300" }}
+            overflow="hidden"
+            border={"10px solid"}
+            borderColor={"purple.900"}
+          >
+            <Image src={levelImages[level - 1]} alt="Coins Stack" />
+          </Box>
         </Flex>
       </Stack>
 
@@ -90,7 +124,7 @@ const HomeScreen: React.FC = () => {
           <HStack mb={2}>
             <Icon as={HiOutlineBolt} color="yellow.400" />
             <Text color="white" fontSize="md" fontWeight="bold">
-              1000/1000
+              {energy}/{1000}
             </Text>
           </HStack>
           <Progress
