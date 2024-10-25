@@ -13,12 +13,7 @@ import { FaChevronRight } from "react-icons/fa";
 
 const EarnScreen: React.FC = () => {
   return (
-    <Box
-      minH={"87vh"}
-      bgGradient="linear(to-b, gray.900, purple.900)"
-      color="white"
-      p={4}
-    >
+    <Box minH={"85vh"} color="white" p={4}>
       {/* Key Counter */}
       <Stack align="center" mb={6}>
         <HStack>

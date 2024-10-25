@@ -13,12 +13,7 @@ import { FaChevronRight } from "react-icons/fa";
 
 const FrenScreen: React.FC = () => {
   return (
-    <Box
-      bgGradient="linear(to-b, gray.900, purple.900)"
-      color="white"
-      minH="87vh"
-      p={4}
-    >
+    <Box color="white" minH="85vh" p={4}>
       {/* Key Counter */}
       <Stack align="center" mb={6}>
         <Text fontSize="lg" fontWeight="semibold">

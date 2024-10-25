@@ -14,13 +14,7 @@ const RankScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"Miners" | "Squads">("Miners");
 
   return (
-    <Box
-      bgGradient="linear(to-b, gray.900, purple.900)"
-      color="white"
-      minH="87vh"
-      p={4}
-      overflow={"scroll"}
-    >
+    <Box color="white" minH="85vh" p={4} overflow={"scroll"}>
       {/* Top Rank Badge */}
       <Stack align="center" mb={6}>
         <Flex align="center" justify="space-between" w="80%">
