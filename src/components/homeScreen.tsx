@@ -132,11 +132,11 @@ const HomeScreen: React.FC<userProps> = ({userData}) => {
         <Flex alignItems="center" justifyContent="center">
           <Image src="./1067Coin.png" alt="Coin Icon" boxSize="50px" />
           <Text fontSize="6xl" fontWeight="bold" mx={4}>
-            {points}
+            {userData && points}
           </Text>
         </Flex>
 
-        <Flex w="100%" >
+        <Flex w="100%">
           <Box
             bg="purple.700"
             as="button"
