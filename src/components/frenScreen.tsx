@@ -20,11 +20,11 @@ interface userProps {
 
 const FrenScreen: React.FC<userProps> = ({userData}) => {
   const [referredUser, setReferredUsers] = useState<any[]>([]);
-    const { fetchRefferals } = useUserAPI(userData?.telegramId, userData?.token);
+    const { fetchRefferals } = useUserAPI(userData?.user.telegramId, userData?.user.token);
 
       const handleInviteFriend = () => {
         const utils = initUtils();
-        const inviteLink = `https://t.me/micro_gptbot?start=${userData.telegramId}`;
+        const inviteLink = `https://t.me/micro_gptbot?start=${userData?.telegramId}`;
         const shareText = `Join me on this awesome Telegram mini app!`;
         const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(
           inviteLink
