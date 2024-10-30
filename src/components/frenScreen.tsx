@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -10,8 +10,42 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { FaChevronRight } from "react-icons/fa";
+import { useUserAPI } from "../hooks/useUserApi";
+import { initUtils } from "@telegram-apps/sdk";
 
-const FrenScreen: React.FC = () => {
+
+interface userProps {
+  userData: any;
+}
+
+const FrenScreen: React.FC<userProps> = ({userData}) => {
+  const [referredUser, setReferredUsers] = useState<any[]>([]);
+    const { fetchRefferals } = useUserAPI(userData?.telegramId, userData?.token);
+
+      const handleInviteFriend = () => {
+        const utils = initUtils();
+        const inviteLink = `https://t.me/micro_gptbot?start=${userData.telegramId}`;
+        const shareText = `Join me on this awesome Telegram mini app!`;
+        const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(
+          inviteLink
+        )}&text=${encodeURIComponent(shareText)}`;
+        utils.openTelegramLink(fullUrl);
+      };
+
+      useEffect(() => {
+        const fetchRef = async () => {
+          const refUsers = await fetchRefferals();
+          console.log("ref users from ref page", refUsers);
+          setReferredUsers(refUsers.referredUsers || []);
+        };
+
+        if (userData) {
+          fetchRef();
+        }
+      }, [userData]);
+
+      console.log(referredUser);
+
   return (
     <Box color="white" minH="85vh" p={4}>
       {/* Key Counter */}
@@ -20,7 +54,7 @@ const FrenScreen: React.FC = () => {
           Total Rewards
         </Text>
         <Text fontSize="4xl" fontWeight="bold">
-          5
+          {userData && userData.coins}
         </Text>
         <Image
           src="./prize.png" // Replace with the actual prize icon URL
@@ -35,20 +69,45 @@ const FrenScreen: React.FC = () => {
           Invite to get bonuses
         </Text>
         <Stack spacing={3}>
-          {/* Task 1 */}
-          <TaskItem
-            title="Invite Fren"
-            rewardAmount={2500}
-            keys={2}
-            icon="./1067Coin.png"
-          />
-          {/* Task 2 */}
-          <TaskItem
-            title="Fren with Telegram Premium"
-            rewardAmount={2500}
-            keys={2}
-            icon="./1067Coin.png"
-          />
+      <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center">
+      <Box bg="purple.800" p={2} borderRadius="md" boxSize="50px" mr={4}></Box>
+      <Flex justify="space-between" w="100%">
+        <Box>
+          <Text fontSize="lg" fontWeight="semibold">
+            Fren with Telegram Premium
+          </Text>
+          <Flex mt={1} alignItems="center">
+            <Image src="./1067Coin.png" alt="Coin" boxSize="20px" mr={2} />
+            <Text fontSize="md" mr={2}>
+              2500
+            </Text>
+            <Image src="./key.png" alt="Key" boxSize="20px" ml={2} />
+            <Text fontSize="md">2</Text>
+          </Flex>
+        </Box>
+        <Icon as={FaChevronRight} />
+      </Flex>
+    </Flex>
+
+      <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center">
+      <Box bg="purple.800" p={2} borderRadius="md" boxSize="50px" mr={4}></Box>
+      <Flex justify="space-between" w="100%">
+        <Box>
+          <Text fontSize="lg" fontWeight="semibold">
+            Invite Fren
+          </Text>
+          <Flex mt={1} alignItems="center">
+            <Image src="./1067Coin.png" alt="Coin" boxSize="20px" mr={2} />
+            <Text fontSize="md" mr={2}>
+              2500
+            </Text>
+            <Image src="./key.png" alt="Key" boxSize="20px" ml={2} />
+            <Text fontSize="md">2</Text>
+          </Flex>
+        </Box>
+        <Icon as={FaChevronRight} />
+      </Flex>
+    </Flex>
         </Stack>
       </Box>
 
@@ -67,7 +126,7 @@ const FrenScreen: React.FC = () => {
       </Box>
 
       <Spacer />
-      <Flex align="center" justify="center" p={5}>
+      <Flex align="center" justify="center" p={5} onClick={handleInviteFriend}>
         <Button rounded={"full"} bg="#4C49FF" color="#fff">
           Send Invite
         </Button>

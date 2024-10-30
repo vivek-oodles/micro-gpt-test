@@ -19,31 +19,80 @@ import { BiWorld } from "react-icons/bi";
 import { HiOutlineBolt } from "react-icons/hi2";
 import { CiCalendar } from "react-icons/ci";
 import { RxRocket } from "react-icons/rx";
+import { useUserAPI } from "../hooks/useUserApi";
+import userEventEmitter from "../utils/eventEmitter";
 
 const levelImages: string[] = ["./coinStack.png"];
 
-const HomeScreen: React.FC = () => {
-  const [balance, setBalance] = useState<number>(1067);
-  const [energy, setEnergy] = useState<number>(1000);
-  const [level, setLevel] = useState<number>(1);
-  const [clicks, setClicks] = useState<number>(0);
+interface userProps{
+  userData: any
+}
 
-  useEffect(() => {
-    const newLevel = Math.min(Math.floor(clicks / 1000) + 1, 5);
-    if (newLevel !== level) {
-      setLevel(newLevel);
-      alert();
-      // `Congratulations! You've reached ${
-      //   levelNames[newLevel - 1]
-      // } Mode (Level ${newLevel})!`
-    }
-  }, [clicks, level]);
+const HomeScreen: React.FC<userProps> = ({userData}) => {
+   const [points, setPoints] = useState(0);
+   const [clicks, setClicks] = useState<{ id: number; x: number; y: number }[]>(
+     []
+   );
+   const [userDeets, setUserDeets] = useState<any>();
+   const [pointsToAdd, setPointsToAdd] = useState(0);
+   const [availableTaps, setAvailableTaps] = useState(0);
 
-  const handleTap = (): void => {
-    setBalance((prev) => prev + 1);
-    setEnergy((prev) => Math.max(0, prev - 1));
-    setClicks((prev) => prev + 1);
+   const { updateUserProfile, refillTaps } = useUserAPI( userData?.user.telegramId,userData?.token);
+
+
+   useEffect(() => {
+     const handleRefill = async () => {
+       try {
+         await refillTaps();
+       } catch (err) {
+         console.error("Error refilling taps:", err);
+       }
+     };
+
+     handleRefill();
+
+     const updateUserHandler = (updatedUser: any) => {
+       console.log("User data updated:", updatedUser);
+     };
+
+     userEventEmitter.on("userUpdated", updateUserHandler);
+
+     return () => {
+       userEventEmitter.off("userUpdated", updateUserHandler);
+     };
+   }, []);
+
+     useEffect(() => {
+       if (userData) {
+         setUserDeets(userData.user);
+         setPointsToAdd(userData.user.multitap);
+         setAvailableTaps(userData.user.taps);
+       }
+     }, [userData]);
+
+  const handleCardClick = async (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    card.style.transform = `perspective(1000px) rotateX(${
+      -y / 10
+    }deg) rotateY(${x / 10}deg)`;
+    setTimeout(() => {
+      card.style.transform = "";
+    }, 100);
+    const newTaps = availableTaps - 1;
+    setAvailableTaps(newTaps);
+    const newPoints = points + pointsToAdd
+    setClicks([...clicks, { id: Date.now(), x: e.pageX, y: e.pageY }]);
+    setPoints(newPoints);
+    await updateUserProfile({coins: newPoints})
+    
   };
+
+  // const handleAnimationEnd = (id: number) => {
+  //   setClicks((prevClicks) => prevClicks.filter((click) => click.id !== id));
+  // };
   return (
     <Flex
       justifyContent="center"
@@ -92,22 +141,22 @@ const HomeScreen: React.FC = () => {
         <Flex alignItems="center" justifyContent="center">
           <Image src="./1067Coin.png" alt="Coin Icon" boxSize="50px" />
           <Text fontSize="6xl" fontWeight="bold" mx={4}>
-            {balance.toLocaleString()}
+            {points}
           </Text>
         </Flex>
 
-        <Flex w="100%">
+        <Flex w="100%" >
           <Box
             bg="purple.700"
             as="button"
-            onClick={handleTap}
+            onClick={handleCardClick}
             _hover={{ bg: "purple.500" }}
             _active={{ bg: "cyan.300" }}
             overflow="hidden"
             border={"10px solid"}
             borderColor={"purple.900"}
           >
-            <Image src={levelImages[level - 1]} alt="Coins Stack" />
+            <Image src={levelImages[0]} alt="Coins Stack" />
           </Box>
         </Flex>
       </Stack>
@@ -124,7 +173,8 @@ const HomeScreen: React.FC = () => {
           <HStack mb={2}>
             <Icon as={HiOutlineBolt} color="yellow.400" />
             <Text color="white" fontSize="md" fontWeight="bold">
-              {energy}/{1000}
+              {userDeets &&
+                `${availableTaps && availableTaps} / ${userDeets.maxTaps}`}
             </Text>
           </HStack>
           <Progress
@@ -172,6 +222,21 @@ const HomeScreen: React.FC = () => {
           </VStack>
         </HStack>
       </HStack>
+
+      {/* {clicks.map((click) => (
+        <div
+          key={click.id}
+          className=" text-5xl font-bold opacity-0 text-white pointer-events-none"
+          style={{
+            top: `${click.y - 42}px`,
+            left: `${click.x - 28}px`,
+            animation: `float 1s ease-out`,
+          }}
+          onAnimationEnd={() => handleAnimationEnd(click.id)}
+        >
+          {pointsToAdd}
+        </div>
+      ))} */}
     </Flex>
   );
 };

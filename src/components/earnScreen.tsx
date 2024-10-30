@@ -11,7 +11,13 @@ import {
 } from "@chakra-ui/react";
 import { FaChevronRight } from "react-icons/fa";
 
-const EarnScreen: React.FC = () => {
+
+interface userProps {
+  userData: any;
+}
+
+const EarnScreen: React.FC<userProps> = ({userData}) => {
+  console.log(userData)
   return (
     <Box minH={"85vh"} color="white" p={4}>
       {/* Key Counter */}

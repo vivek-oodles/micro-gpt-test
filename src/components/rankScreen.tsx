@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
@@ -9,9 +9,57 @@ import {
   Avatar,
 } from "@chakra-ui/react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useUserAPI } from "../hooks/useUserApi";
 
-const RankScreen: React.FC = () => {
+interface userProps {
+  userData: any;
+}
+
+type User = {
+  id: string;
+  telegramId: string;
+  username: string;
+  photoUrl?: string; // Optional field
+  level: number;
+  coins: number;
+  taps: number;
+  maxTaps: number;
+  refillRate: number;
+  lastRefillTime: Date;
+  slots: number;
+  referralCount: number;
+  referredBy?: string; // Optional field
+  freeSpins: number;
+  multitap: number;
+  tapLimitBoost: number;
+  tappingGuruUses: number;
+  profitPerHour: number;
+  lastEarningsUpdate: Date;
+  lastCheckIn?: Date; // Optional field
+  checkInStreak: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+const RankScreen: React.FC<userProps> = ({userData}) => {
   const [activeTab, setActiveTab] = useState<"Miners" | "Squads">("Miners");
+  const {fetchAllUsers} = useUserAPI(userData?.telegramId, userData?.token)
+  const [users, setUsers] = useState<User[] | null>([])
+
+  useEffect(()=>{
+    const fetchUsers = async()=>{
+      try {
+        const users = await fetchAllUsers()
+        const sortedUsers = users.sort((a: User, b: User) => b.coins - a.coins);
+        console.log(users)
+        setUsers(sortedUsers)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    fetchUsers()
+  }, [])
 
   return (
     <Box color="white" minH="85vh" p={4} overflow={"scroll"}>
@@ -63,26 +111,17 @@ const RankScreen: React.FC = () => {
       {activeTab === "Miners" && (
         <Stack spacing={4}>
           {/* Miner 1 */}
-          <MinerItem
-            rankIcon="./3gold.png"
-            name="Apexfrez"
-            coins={4999}
-            avatarBg="green.400"
-          />
-          {/* Miner 2 */}
-          <MinerItem
-            rankIcon="./2silver.png"
-            name="BrianGrady.120"
-            coins={4999}
-            avatarBg="blue.400"
-          />
-          {/* Miner 3 */}
-          <MinerItem
-            rankIcon="./3bronze.png"
-            name="Martinberkx02"
-            coins={4999}
-            avatarBg="pink.400"
-          />
+          {users && users.length > 0 && users.map((user, index)=>{
+            return (
+              <MinerItem
+              key={index}
+                rankIcon="./3gold.png"
+                name={user.username}
+                coins={user.coins}
+                avatarBg="green.400"
+              />
+            );
+          })}
         </Stack>
       )}
 

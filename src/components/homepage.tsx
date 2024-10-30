@@ -28,11 +28,7 @@ import FrenScreen from "./frenScreen";
 import HomeScreen from "./homeScreen";
 
 // Define the types for components
-const Home: React.FC = () => <HomeScreen />;
-const Earn: React.FC = () => <EarnScreen />;
-const Mine: React.FC = () => <Text></Text>;
-const Rank: React.FC = () => <RankScreen />;
-const Frens: React.FC = () => <FrenScreen />;
+
 
 type MenuItem = {
   icon: React.ElementType;
@@ -40,8 +36,13 @@ type MenuItem = {
   key: string;
   component: React.FC;
 };
-const HomePage = () => {
+const HomePage = ({userData}: {userData: any}) => {
   const [activePage, setActivePage] = useState<string>("home");
+  const Home: React.FC = () => <HomeScreen userData={userData} />;
+  const Earn: React.FC = () => <EarnScreen userData={userData} />;
+  const Mine: React.FC = () => <Text></Text>;
+  const Rank: React.FC = () => <RankScreen userData={userData} />;
+  const Frens: React.FC = () => <FrenScreen userData={userData} />;
 
   const menuItems: MenuItem[] = [
     { icon: FaHome, label: "HOME", key: "home", component: Home },
