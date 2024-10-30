@@ -24,7 +24,7 @@ const FrenScreen: React.FC<userProps> = ({userData}) => {
 
       const handleInviteFriend = () => {
         const utils = initUtils();
-        const inviteLink = `https://t.me/micro_gptbot?start=${userData?.telegramId}`;
+        const inviteLink = `https://t.me/micro_gptbot?start=${userData?.user.telegramId}`;
         const shareText = `Join me on this awesome Telegram mini app!`;
         const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(
           inviteLink
@@ -54,7 +54,7 @@ const FrenScreen: React.FC<userProps> = ({userData}) => {
           Total Rewards
         </Text>
         <Text fontSize="4xl" fontWeight="bold">
-          {userData && userData.coins}
+          {userData && userData.user.coins}
         </Text>
         <Image
           src="./prize.png" // Replace with the actual prize icon URL
