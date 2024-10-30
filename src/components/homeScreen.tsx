@@ -57,7 +57,7 @@ const HomeScreen: React.FC<userProps> = ({userData}) => {
          setUserDeets(userData.user);
          setPointsToAdd(userData.user.multitap);
          setAvailableTaps(userData.user.taps);
-         setPoints(userData.coins)
+         setPoints((prev) => prev + userData.coins);
        }
      }, [userData]);
 
