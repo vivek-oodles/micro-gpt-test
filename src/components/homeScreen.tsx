@@ -20,7 +20,7 @@ import { HiOutlineBolt } from "react-icons/hi2";
 import { CiCalendar } from "react-icons/ci";
 import { RxRocket } from "react-icons/rx";
 import { useUserAPI } from "../hooks/useUserApi";
-import userEventEmitter from "../utils/eventEmitter";
+// import userEventEmitter from "../utils/eventEmitter";
 
 const levelImages: string[] = ["./coinStack.png"];
 
@@ -50,16 +50,6 @@ const HomeScreen: React.FC<userProps> = ({userData}) => {
      };
 
      handleRefill();
-
-     const updateUserHandler = (updatedUser: any) => {
-       console.log("User data updated:", updatedUser);
-     };
-
-     userEventEmitter.on("userUpdated", updateUserHandler);
-
-     return () => {
-       userEventEmitter.off("userUpdated", updateUserHandler);
-     };
    }, []);
 
      useEffect(() => {
