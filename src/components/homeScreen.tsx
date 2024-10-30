@@ -57,7 +57,7 @@ const HomeScreen: React.FC<userProps> = ({userData}) => {
          setUserDeets(userData.user);
          setPointsToAdd(userData.user.multitap);
          setAvailableTaps(userData.user.taps);
-         setPoints((prev) => prev + userData.coins);
+         setPoints(userData.user.coins);
        }
      }, [userData]);
 
@@ -80,6 +80,8 @@ const HomeScreen: React.FC<userProps> = ({userData}) => {
     await updateUserProfile({coins: newPoints})
     
   };
+
+  console.log(points)
 
   // const handleAnimationEnd = (id: number) => {
   //   setClicks((prevClicks) => prevClicks.filter((click) => click.id !== id));
