@@ -21,7 +21,9 @@ function App() {
     const { userData } = useUserLogin(telegramInitData, referralId);
     console.log("userdata from app.tx", userData);
 
-
+       if (!userData) {
+         return "Loading....."; // Better loading indication
+       }
   return (
     <>
       <HomePage />
