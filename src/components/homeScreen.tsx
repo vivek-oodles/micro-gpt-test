@@ -20,7 +20,7 @@ import { HiOutlineBolt } from "react-icons/hi2";
 import { CiCalendar } from "react-icons/ci";
 import { RxRocket } from "react-icons/rx";
 import { useUserAPI } from "../hooks/useUserApi";
-// import userEventEmitter from "../utils/eventEmitter";
+import userEventEmitter from "../utils/eventEmitter";
 
 const levelImages: string[] = ["./coinStack.png"];
 
@@ -36,8 +36,29 @@ const HomeScreen: React.FC<userProps> = ({userData}) => {
    const [userDeets, setUserDeets] = useState<any>();
    const [pointsToAdd, setPointsToAdd] = useState(0);
    const [availableTaps, setAvailableTaps] = useState(0);
+   const [coins, setCoins] = useState(0)
 
    const { updateUserProfile, refillTaps } = useUserAPI( userData?.user.telegramId,userData?.token);
+
+
+        useEffect(() => {
+          const handleUserUpdate = (updatedUser: any) => {
+            // Update the state with the latest user data
+            console.log(updatedUser);
+            setUserDeets(updatedUser);
+            setCoins(updatedUser.coins)
+            setPointsToAdd(updatedUser.multitap);
+            console.log("User data updated:", updatedUser);
+          };
+
+          // Listen for the 'userUpdated' event
+          userEventEmitter.on("userUpdated", handleUserUpdate);
+
+          // Clean up the event listener when the component is unmounted
+          return () => {
+            userEventEmitter.off("userUpdated", handleUserUpdate);
+          };
+        }, []);
 
 
    useEffect(() => {
@@ -134,7 +155,7 @@ const HomeScreen: React.FC<userProps> = ({userData}) => {
         <Flex alignItems="center" justifyContent="center">
           <Image src="./1067Coin.png" alt="Coin Icon" boxSize="50px" />
           <Text fontSize="6xl" fontWeight="bold" mx={4}>
-            {userData && points}
+            {userData && Math.max(points, coins)}
           </Text>
         </Flex>
 
