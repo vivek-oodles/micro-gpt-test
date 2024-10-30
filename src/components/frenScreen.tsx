@@ -69,7 +69,7 @@ const FrenScreen: React.FC<userProps> = ({userData}) => {
           Invite to get bonuses
         </Text>
         <Stack spacing={3}>
-      <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center">
+      <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center" onClick={handleInviteFriend}> 
       <Box bg="purple.800" p={2} borderRadius="md" boxSize="50px" mr={4}></Box>
       <Flex justify="space-between" w="100%">
         <Box>
@@ -77,11 +77,11 @@ const FrenScreen: React.FC<userProps> = ({userData}) => {
             Fren with Telegram Premium
           </Text>
           <Flex mt={1} alignItems="center">
-            <Image src="./1067Coin.png" alt="Coin" boxSize="20px" mr={2} />
+            <Image src="/1067Coin.png" alt="Coin" boxSize="20px" mr={2} />
             <Text fontSize="md" mr={2}>
               2500
             </Text>
-            <Image src="./key.png" alt="Key" boxSize="20px" ml={2} />
+            <Image src="/key.png" alt="Key" boxSize="20px" ml={2} />
             <Text fontSize="md">2</Text>
           </Flex>
         </Box>
@@ -89,7 +89,7 @@ const FrenScreen: React.FC<userProps> = ({userData}) => {
       </Flex>
     </Flex>
 
-      <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center">
+      <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center" onClick={handleInviteFriend}>
       <Box bg="purple.800" p={2} borderRadius="md" boxSize="50px" mr={4}></Box>
       <Flex justify="space-between" w="100%">
         <Box>
@@ -97,11 +97,11 @@ const FrenScreen: React.FC<userProps> = ({userData}) => {
             Invite Fren
           </Text>
           <Flex mt={1} alignItems="center">
-            <Image src="./1067Coin.png" alt="Coin" boxSize="20px" mr={2} />
+            <Image src="/1067Coin.png" alt="Coin" boxSize="20px" mr={2} />
             <Text fontSize="md" mr={2}>
               2500
             </Text>
-            <Image src="./key.png" alt="Key" boxSize="20px" ml={2} />
+            <Image src="/key.png" alt="Key" boxSize="20px" ml={2} />
             <Text fontSize="md">2</Text>
           </Flex>
         </Box>
