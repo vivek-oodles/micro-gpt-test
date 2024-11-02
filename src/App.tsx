@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useUserLogin } from "./hooks/useAuth";
 
 function App() {
-  //  const [telegramInitData, setTelegramInitData] = useState<string>("");
+   const [telegramInitData, setTelegramInitData] = useState<string>("");
    const queryString = window.location.search; // Get the query string
    const urlParams = new URLSearchParams(queryString);
    const referralId = urlParams.get("referralCode")!;
