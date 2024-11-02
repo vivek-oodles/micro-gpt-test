@@ -13,13 +13,11 @@ import {
   VStack,
   Icon,
   Spacer,
-  Link,
 } from "@chakra-ui/react";
 import { FaChartSimple } from "react-icons/fa6";
 import { BiWorld } from "react-icons/bi";
 import { HiOutlineBolt } from "react-icons/hi2";
 import { CiCalendar } from "react-icons/ci";
-import { RxRocket } from "react-icons/rx";
 import { useUserAPI } from "../hooks/useUserApi";
 import userEventEmitter from "../utils/eventEmitter";
 
