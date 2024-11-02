@@ -23,11 +23,6 @@ const EarnScreen: React.FC<userProps> = ({userData}) => {
       {/* Key Counter */}
       <Stack align="center" mb={6}>
         <HStack>
-          <Image
-            src="./key.png" // Replace with the actual key icon URL
-            alt="Key Icon"
-            boxSize="80px"
-          />
           <Text fontSize="4xl" fontWeight="bold">
             0
           </Text>
@@ -45,11 +40,24 @@ const EarnScreen: React.FC<userProps> = ({userData}) => {
         </Text>
         <Stack spacing={3}>
           {/* Task 1 */}
-          <TaskItem title="Join Channel" rewardAmount={2500} keys={2} />
+          <TaskItem
+            title="Join Channel"
+            rewardAmount={2500}
+            image={"/telegram.svg"}
+          />
           {/* Task 2 */}
-          <TaskItem title="Connect Wallet" rewardAmount={2500} keys={2} />
+          <TaskItem
+            title="Connect Wallet"
+            rewardAmount={2500}
+            image="/ton.svg"
+          />
           {/* Task 3 */}
-          <TaskItem title="Follow on X" rewardAmount={2500} keys={2} />
+          
+          <TaskItem
+            title="Follow on X"
+            rewardAmount={2500}
+            image="/twitter.svg"
+          />
         </Stack>
       </Box>
 
@@ -69,30 +77,62 @@ const EarnScreen: React.FC<userProps> = ({userData}) => {
 interface TaskItemProps {
   title: string;
   rewardAmount: number;
-  keys: number;
+  image: string
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ title, rewardAmount, keys }) => {
+const TaskItem: React.FC<TaskItemProps> = ({ title, rewardAmount, image}) => {
+  const isTwitterTask = title === "Follow on X"
   return (
-    <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center">
-      <Box bg="purple.800" p={2} borderRadius="md" boxSize="50px" mr={4}></Box>
-      <Flex justify="space-between" w="100%">
-        <Box>
-          <Text fontSize="lg" fontWeight="semibold">
-            {title}
-          </Text>
-          <Flex mt={1} alignItems="center">
-            <Image src="./1067Coin.png" alt="Coin" boxSize="20px" mr={2} />
-            <Text fontSize="md" mr={2}>
-              {rewardAmount.toLocaleString()}
-            </Text>
-            <Image src="./key.png" alt="Key" boxSize="20px" ml={2} />
-            <Text fontSize="md">{keys}</Text>
+    <>
+      {isTwitterTask ? (
+        <a href={"https://twitter.com/Micro_GPT"} target="_blank">
+          <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center">
+            <Box bg="purple.800" p={2} borderRadius="md" boxSize="50px" mr={4}>
+              <Image src={image} />
+            </Box>
+            <Flex justify="space-between" w="100%">
+              <Box>
+                <Text fontSize="lg" fontWeight="semibold">
+                  {title}
+                </Text>
+                <Flex mt={1} alignItems="center">
+                  <Image
+                    src="./1067Coin.png"
+                    alt="Coin"
+                    boxSize="20px"
+                    mr={2}
+                  />
+                  <Text fontSize="md" mr={2}>
+                    {rewardAmount.toLocaleString()}
+                  </Text>
+                </Flex>
+              </Box>
+              <Icon as={FaChevronRight} />
+            </Flex>
           </Flex>
-        </Box>
-        <Icon as={FaChevronRight} />
-      </Flex>
-    </Flex>
+        </a>
+      ) : (
+        <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center">
+          <Box bg="purple.800" p={2} borderRadius="md" boxSize="50px" mr={4}>
+            <Image src={image} />
+          </Box>
+          <Flex justify="space-between" w="100%">
+            <Box>
+              <Text fontSize="lg" fontWeight="semibold">
+                {title}
+              </Text>
+              <Flex mt={1} alignItems="center">
+                <Image src="./1067Coin.png" alt="Coin" boxSize="20px" mr={2} />
+                <Text fontSize="md" mr={2}>
+                  {rewardAmount.toLocaleString()}
+                </Text>
+              </Flex>
+            </Box>
+            <Icon as={FaChevronRight} />
+          </Flex>
+        </Flex>
+      )}
+    </>
   );
 };
 

@@ -38,7 +38,9 @@ type MenuItem = {
 };
 const HomePage = ({userData}: {userData: any}) => {
   const [activePage, setActivePage] = useState<string>("home");
-  const Home: React.FC = () => <HomeScreen userData={userData} />;
+  const Home: React.FC = () => (
+    <HomeScreen userData={userData} setActivePage={setActivePage} />
+  );
   const Earn: React.FC = () => <EarnScreen userData={userData} />;
   const Mine: React.FC = () => <Text></Text>;
   const Rank: React.FC = () => <RankScreen userData={userData} />;

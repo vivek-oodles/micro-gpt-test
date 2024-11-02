@@ -13,6 +13,7 @@ import {
   VStack,
   Icon,
   Spacer,
+  Link,
 } from "@chakra-ui/react";
 import { FaChartSimple } from "react-icons/fa6";
 import { BiWorld } from "react-icons/bi";
@@ -26,9 +27,10 @@ const levelImages: string[] = ["./coinStack.png"];
 
 interface userProps{
   userData: any
+  setActivePage: (page: string)=> void
 }
 
-const HomeScreen: React.FC<userProps> = ({userData}) => {
+const HomeScreen: React.FC<userProps> = ({userData, setActivePage}) => {
    const [points, setPoints] = useState(0);
    const [clicks, setClicks] = useState<{ id: number; x: number; y: number }[]>(
      []
@@ -36,7 +38,7 @@ const HomeScreen: React.FC<userProps> = ({userData}) => {
    const [userDeets, setUserDeets] = useState<any>();
    const [pointsToAdd, setPointsToAdd] = useState(0);
    const [availableTaps, setAvailableTaps] = useState(0);
-   const [coins, setCoins] = useState(0)
+   const [coins, setCoins] = useState(0)    
 
    const { updateUserProfile, refillTaps } = useUserAPI( userData?.user.telegramId,userData?.token);
 
@@ -104,22 +106,29 @@ const HomeScreen: React.FC<userProps> = ({userData}) => {
 
   console.log(points)
 
-  // const handleAnimationEnd = (id: number) => {
-  //   setClicks((prevClicks) => prevClicks.filter((click) => click.id !== id));
-  // };
+  const handleAnimationEnd = (id: number) => {
+    setClicks((prevClicks) => prevClicks.filter((click) => click.id !== id));
+  };
   return (
     <Flex
-      justifyContent="center"
+      justifyContent="space-between"
       alignItems="center"
-      py={5}
-      gap={5}
+      py={1}
+      gap={1}
       display="flex"
       flexDirection="column"
       minH="85vh"
+      overflow={"hidden"}
     >
       <HStack>
         {" "}
-        <Circle size="40px" bg="#7371FC99" border="1px solid" as="button">
+        <Circle
+          size="40px"
+          bg="#7371FC99"
+          border="1px solid"
+          as="button"
+          onClick={() => setActivePage("rank")}
+        >
           <IconButton
             icon={<FaChartSimple />}
             aria-label="Home"
@@ -151,28 +160,57 @@ const HomeScreen: React.FC<userProps> = ({userData}) => {
         </Circle>
       </HStack>
 
-      <Stack align="center" spacing={7}>
+      <Stack align="center">
         <Flex alignItems="center" justifyContent="center">
           <Image src="./1067Coin.png" alt="Coin Icon" boxSize="50px" />
-          <Text fontSize="6xl" fontWeight="bold" mx={4}>
+          <Text fontSize="4xl" fontWeight="bold" mx={4}>
             {userData && Math.max(points, coins)}
           </Text>
         </Flex>
 
-        <Flex w="100%">
+        <Box
+          w={"100%"}
+          display={"flex"}
+          flexDirection={"column"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          className="circle-outer h-[30vh] sm:h-[35vh]"
+          onClick={handleCardClick}
+        >
           <Box
-            bg="purple.700"
-            as="button"
-            onClick={handleCardClick}
-            _hover={{ bg: "purple.500" }}
-            _active={{ bg: "cyan.300" }}
-            overflow="hidden"
-            border={"10px solid"}
-            borderColor={"purple.900"}
+            width={"100%"}
+            h={"100%"}
+            display={"flex"}
+            flexDirection={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            // overflow={'hidden'}
+
+            className="circle-inner"
           >
-            <Image src={levelImages[0]} alt="Coins Stack" />
+            {clicks.map((click) => (
+              <div
+                key={click.id}
+                className=" text-5xl font-bold opacity-0 text-white pointer-events-none"
+                style={{
+                  top: `${click.y - 42}px`,
+                  left: `${click.x - 28}px`,
+                  animation: `float 1s ease-out`,
+                }}
+                onAnimationEnd={() => handleAnimationEnd(click.id)}
+              >
+                {pointsToAdd}
+              </div>
+            ))}
+            <Image
+              alt="floating coin img"
+              src={levelImages[0]}
+              position={"relative"}
+              zIndex={1}
+              className="w-[70%] sm:w-[80%]"
+            />
           </Box>
-        </Flex>
+        </Box>
       </Stack>
 
       <HStack
@@ -180,7 +218,7 @@ const HomeScreen: React.FC<userProps> = ({userData}) => {
         spacing={5}
         align="center"
         justify="space-between"
-        mt={20}
+        mt={5}
       >
         {/* Progress Bar Section */}
         <Box w="50%">
@@ -220,37 +258,8 @@ const HomeScreen: React.FC<userProps> = ({userData}) => {
             </Button>
             <Text fontSize="xs">Daily Login</Text>
           </VStack>
-          <VStack>
-            <Button
-              flex={1}
-              h="auto"
-              py={2}
-              bgColor="#7371FC99"
-              _hover={{ bg: "#CDC1FF80" }}
-              color="white"
-              flexDir="column"
-            >
-              <Icon as={RxRocket} boxSize={6} />
-            </Button>
-            <Text fontSize="xs">Boosts</Text>
-          </VStack>
         </HStack>
       </HStack>
-
-      {/* {clicks.map((click) => (
-        <div
-          key={click.id}
-          className=" text-5xl font-bold opacity-0 text-white pointer-events-none"
-          style={{
-            top: `${click.y - 42}px`,
-            left: `${click.x - 28}px`,
-            animation: `float 1s ease-out`,
-          }}
-          onAnimationEnd={() => handleAnimationEnd(click.id)}
-        >
-          {pointsToAdd}
-        </div>
-      ))} */}
     </Flex>
   );
 };
