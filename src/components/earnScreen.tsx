@@ -8,11 +8,6 @@ import {
   Spacer,
   Icon,
   HStack,
-  Drawer,
-  DrawerBody,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
   useDisclosure
 } from "@chakra-ui/react";
 import { FaChevronRight } from "react-icons/fa";
@@ -24,7 +19,7 @@ interface userProps {
 }
 
 const EarnScreen: React.FC<userProps> = ({userData}) => {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+ 
   console.log(userData)
   return (
     <Box minH={"85vh"} color="white" p={4}>
@@ -58,7 +53,7 @@ const EarnScreen: React.FC<userProps> = ({userData}) => {
             title="Connect Wallet"
             rewardAmount={2500}
             image="/ton.svg"
-            onClick={onOpen}
+           
           />
           {/* Task 3 */}
 
@@ -80,30 +75,7 @@ const EarnScreen: React.FC<userProps> = ({userData}) => {
 
       <Spacer />
 
-      <Drawer
-        isOpen={isOpen}
-        placement="bottom"
-        onClose={onClose}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
- 
 
-          <DrawerBody >
-
-            <Flex minH={"40vh"} direction={"column"} justifyContent={"center"} alignItems={'center'} gap={10}>
-              <Text>Please connect your wallet below</Text>
-
-
-              <TonConnectButton />
-
-            </Flex>
-           
-           
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
     </Box>
   );
 };
@@ -117,6 +89,7 @@ interface TaskItemProps {
 
 const TaskItem: React.FC<TaskItemProps> = ({ title, rewardAmount, image, onClick}) => {
   const isTwitterTask = title === "Follow on X"
+  const isWalletTask = title === "Connect Wallet"
   return (
     <>
       {isTwitterTask ? (
@@ -146,16 +119,20 @@ const TaskItem: React.FC<TaskItemProps> = ({ title, rewardAmount, image, onClick
             </Flex>
           </Flex>
         </a>
-      ) : (
-        <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center" onClick={onClick}>
+      ) : isWalletTask ? (
+        <Flex
+          bg="purple.700"
+          p={4}
+          borderRadius="md"
+          alignItems="center"
+          onClick={onClick}
+        >
           <Box bg="purple.800" p={2} borderRadius="md" boxSize="50px" mr={4}>
             <Image src={image} />
           </Box>
           <Flex justify="space-between" w="100%">
             <Box>
-              <Text fontSize="lg" fontWeight="semibold">
-                {title}
-              </Text>
+              <TonConnectButton />
               <Flex mt={1} alignItems="center">
                 <Image src="./1067Coin.png" alt="Coin" boxSize="20px" mr={2} />
                 <Text fontSize="md" mr={2}>
@@ -166,6 +143,39 @@ const TaskItem: React.FC<TaskItemProps> = ({ title, rewardAmount, image, onClick
             <Icon as={FaChevronRight} />
           </Flex>
         </Flex>
+      ) : (
+        <a href="https://t.me/micro_gpt" target="_blank">
+          <Flex
+            bg="purple.700"
+            p={4}
+            borderRadius="md"
+            alignItems="center"
+            onClick={onClick}
+          >
+            <Box bg="purple.800" p={2} borderRadius="md" boxSize="50px" mr={4}>
+              <Image src={image} />
+            </Box>
+            <Flex justify="space-between" w="100%">
+              <Box>
+                <Text fontSize="lg" fontWeight="semibold">
+                  {title}
+                </Text>
+                <Flex mt={1} alignItems="center">
+                  <Image
+                    src="./1067Coin.png"
+                    alt="Coin"
+                    boxSize="20px"
+                    mr={2}
+                  />
+                  <Text fontSize="md" mr={2}>
+                    {rewardAmount.toLocaleString()}
+                  </Text>
+                </Flex>
+              </Box>
+              <Icon as={FaChevronRight} />
+            </Flex>
+          </Flex>
+        </a>
       )}
     </>
   );
