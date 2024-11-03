@@ -84,7 +84,7 @@ const EarnScreen: React.FC<userProps> = ({userData}) => {
 
       <Drawer
         isOpen={isOpen}
-        placement="right"
+        placement="bottom"
         onClose={onClose}
       >
         <DrawerOverlay />
@@ -92,9 +92,9 @@ const EarnScreen: React.FC<userProps> = ({userData}) => {
           <DrawerCloseButton />
  
 
-          <DrawerBody>
+          <DrawerBody >
 
-            <Flex direction={"column"} justifyContent={"center"} alignItems={'center'}>
+            <Flex minH={"40vh"} direction={"column"} justifyContent={"center"} alignItems={'center'} gap={10}>
               <Text>Please connect your wallet below</Text>
 
 
