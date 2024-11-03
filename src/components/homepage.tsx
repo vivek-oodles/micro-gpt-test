@@ -26,7 +26,7 @@ import EarnScreen from "./earnScreen";
 import RankScreen from "./rankScreen";
 import FrenScreen from "./frenScreen";
 import HomeScreen from "./homeScreen";
-import { TonConnectButton } from "@tonconnect/ui-react";
+
 
 // Define the types for components
 

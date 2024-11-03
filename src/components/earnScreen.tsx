@@ -8,7 +8,6 @@ import {
   Spacer,
   Icon,
   HStack,
-  useDisclosure
 } from "@chakra-ui/react";
 import { FaChevronRight } from "react-icons/fa";
 import { TonConnectButton } from "@tonconnect/ui-react";
