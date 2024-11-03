@@ -48,7 +48,7 @@ export const useUserAPI = (userId: string, token?: string) => {
     userEventEmitter.emit('userUpdated', user);
   }, [user])
 
-  const BaseUrl = 'https://c8df-105-112-67-139.ngrok-free.app/api'
+  const BaseUrl = 'hhttps://5a50-105-112-12-42.ngrok-free.app/api'
 
   // Get user profile
   const fetchUserProfile = async () => {

@@ -8,8 +8,17 @@ import {
   Spacer,
   Icon,
   HStack,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure
 } from "@chakra-ui/react";
 import { FaChevronRight } from "react-icons/fa";
+import { TonConnectButton } from "@tonconnect/ui-react";
 
 
 interface userProps {
@@ -17,6 +26,7 @@ interface userProps {
 }
 
 const EarnScreen: React.FC<userProps> = ({userData}) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
   console.log(userData)
   return (
     <Box minH={"85vh"} color="white" p={4}>
@@ -50,9 +60,10 @@ const EarnScreen: React.FC<userProps> = ({userData}) => {
             title="Connect Wallet"
             rewardAmount={2500}
             image="/ton.svg"
+            onClick={onOpen}
           />
           {/* Task 3 */}
-          
+
           <TaskItem
             title="Follow on X"
             rewardAmount={2500}
@@ -70,6 +81,31 @@ const EarnScreen: React.FC<userProps> = ({userData}) => {
       </Box>
 
       <Spacer />
+
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+ 
+
+          <DrawerBody>
+
+            <Flex direction={"column"} justifyContent={"center"} alignItems={'center'}>
+              <Text>Please connect your wallet below</Text>
+
+
+              <TonConnectButton />
+
+            </Flex>
+           
+           
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </Box>
   );
 };
@@ -78,9 +114,10 @@ interface TaskItemProps {
   title: string;
   rewardAmount: number;
   image: string
+  onClick?: ()=> void
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ title, rewardAmount, image}) => {
+const TaskItem: React.FC<TaskItemProps> = ({ title, rewardAmount, image, onClick}) => {
   const isTwitterTask = title === "Follow on X"
   return (
     <>
@@ -112,7 +149,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ title, rewardAmount, image}) => {
           </Flex>
         </a>
       ) : (
-        <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center">
+        <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center" onClick={onClick}>
           <Box bg="purple.800" p={2} borderRadius="md" boxSize="50px" mr={4}>
             <Image src={image} />
           </Box>
