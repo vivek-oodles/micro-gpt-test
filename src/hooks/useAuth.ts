@@ -7,7 +7,7 @@ interface UseUserLoginProps {
   loading: boolean;
 }
 
-const baseURL = 'https://5a50-105-112-12-42.ngrok-free.app/api'
+const baseURL = import.meta.env.VITE_BACKEND_BASE_URL;
 
 // Custom Hook for handling user login
 export const useUserLogin = (initData: string, referralCode?: string): UseUserLoginProps => {

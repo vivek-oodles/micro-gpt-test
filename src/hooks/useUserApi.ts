@@ -3,7 +3,7 @@ import axios from "axios";
 import userEventEmitter from "../utils/eventEmitter";
 
 // Define the shape of the user object (you can extend this as needed)
-interface User {
+ interface User {
    id           : Number
   telegramId    : string
   username      : string
@@ -20,7 +20,6 @@ interface User {
   tapLimitBoost   : Number
   tappingGuruUses : Number
   profitPerHour   : Number
-
   cards           : []
 }
 
@@ -48,7 +47,9 @@ export const useUserAPI = (userId: string, token?: string) => {
     userEventEmitter.emit('userUpdated', user);
   }, [user])
 
-  const BaseUrl = 'hhttps://5a50-105-112-12-42.ngrok-free.app/api'
+  // const BaseUrl = 'http://localhost:3001/api'
+  const BaseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+  console.log({BaseUrl})
 
   // Get user profile
   const fetchUserProfile = async () => {
@@ -208,8 +209,6 @@ const refillTaps = async () => {
       setLoading(false);
     }
   };
-
-
 
 
   return {
