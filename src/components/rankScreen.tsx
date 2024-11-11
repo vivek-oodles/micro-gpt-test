@@ -41,17 +41,17 @@ type User = {
   updatedAt: Date;
 };
 
-const RankScreen: React.FC<userProps> = ({userData}) => {
+const RankScreen: React.FC<userProps> = ({ userData }) => {
   const [activeTab, setActiveTab] = useState<"Miners" | "Squads">("Miners");
-  const {fetchAllUsers} = useUserAPI(userData?.telegramId, userData?.token)
+  const { fetchAllUsers } = useUserAPI(userData?.telegramId, userData?.token)
   const [users, setUsers] = useState<User[] | null>([])
 
-  useEffect(()=>{
-    const fetchUsers = async()=>{
+  useEffect(() => {
+    const fetchUsers = async () => {
       try {
         const users = await fetchAllUsers()
         const sortedUsers = users.sort((a: User, b: User) => b.coins - a.coins);
-        console.log(users)
+        console.log("I am user", users)
         setUsers(sortedUsers)
       } catch (error) {
         console.log(error)
@@ -87,52 +87,70 @@ const RankScreen: React.FC<userProps> = ({userData}) => {
       </Stack>
 
       {/* Tabs: Miners and Squads */}
-      <Flex justify="center" mb={4}>
+      <Flex justify="center" mb={4} border={'3px solid #2F2946'} background={'#2F2946'} width={'full'} rounded={'full'}>
         <Button
           onClick={() => setActiveTab("Miners")}
           variant={activeTab === "Miners" ? "solid" : "ghost"}
           colorScheme="purple"
-          mr={4}
           px={6}
+          width="100%"
+          height="44px"
+          gap="0px"
+          borderRadius="23px"
+          opacity="0px"
+          bgColor={activeTab === "Miners" ? "#9B51E0" :"#2F2946"  }
+        
+          
         >
           Miners
         </Button>
         <Button
           onClick={() => setActiveTab("Squads")}
-          variant={activeTab === "Squads" ? "solid" : "ghost"}
+          variant={activeTab === "Squads" ? "ghost" : "solid"}
           colorScheme="purple"
-          px={6}
+          
+          width="100%"
+          height="44px"
+          gap="0px"
+          borderRadius="23px"
+          opacity="0px"
+          bgColor={activeTab === "Squads" ? "#9B51E0" :"#2F2946"  }
+
         >
           Squads
         </Button>
       </Flex>
 
       {/* Miners List */}
-      {activeTab === "Miners" && (
-        <Stack spacing={4}>
-          {/* Miner 1 */}
-          {users && users.length > 0 && users.map((user, index)=>{
-            return (
-              <MinerItem
-              key={index}
-                rankIcon="./3gold.png"
-                name={user.username}
-                coins={user.coins}
-                avatarBg="green.400"
-              />
-            );
-          })}
-        </Stack>
-      )}
+      {
+        activeTab === "Miners" && (
+          <Stack spacing={4}>
+            {/* Miner 1 */}
+            {users && users.length > 0 && users.map((user, index) => {
+              return (
+                <MinerItem
+                  key={index}
+                  rankIcon="./3gold.png"
+                  name={user.username}
+                  coins={user.coins}
+                  avatarBg="green.400"
+                />
+              );
+            })}
+          </Stack>
+        )
+      }
 
       {/* Squads List */}
-      {activeTab === "Squads" && (
-        <Stack spacing={4}>
-          {/* Placeholder for squad data */}
-          <Text>Squads content goes here</Text>
-        </Stack>
-      )}
-    </Box>
+      {
+        activeTab === "Squads" && (
+          <Stack spacing={4}>
+            {/* Placeholder for squad data */}
+            <Text>Squads content goes here</Text>
+          </Stack>
+        )
+      }
+    </Box >
   );
 };
 

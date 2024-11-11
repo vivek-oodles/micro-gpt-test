@@ -24,8 +24,8 @@ const FrenScreen: React.FC<userProps> = ({userData}) => {
 
       const handleInviteFriend = () => {
         const utils = initUtils();
-        const inviteLink = `https://t.me/micro_gptbot?start=${userData?.user.telegramId}`;
-        const shareText = `Join me on this awesome Telegram mini app!`;
+        const inviteLink = `https://t.me/micro_drop_bot?start=${userData?.user.telegramId}`;
+        const shareText = `Participate in $MICRO Drop on telegram Now by playing our game here ${inviteLink}`;
         const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(
           inviteLink
         )}&text=${encodeURIComponent(shareText)}`;
@@ -82,7 +82,7 @@ const FrenScreen: React.FC<userProps> = ({userData}) => {
             <Flex justify="space-between" w="100%">
               <Box>
                 <Text fontSize="lg" fontWeight="semibold">
-                  Fren with Telegram Premium
+                  Invite Fren 
                 </Text>
                 <Flex mt={1} alignItems="center">
                   <Image src="/1067Coin.png" alt="Coin" boxSize="20px" mr={2} />
@@ -110,7 +110,7 @@ const FrenScreen: React.FC<userProps> = ({userData}) => {
             <Flex justify="space-between" w="100%">
               <Box>
                 <Text fontSize="lg" fontWeight="semibold">
-                  Invite Fren
+                 Intivte Fren with Telegram Premium
                 </Text>
                 <Flex mt={1} alignItems="center">
                   <Image src="/1067Coin.png" alt="Coin" boxSize="20px" mr={2} />
@@ -130,53 +130,80 @@ const FrenScreen: React.FC<userProps> = ({userData}) => {
       {/* Extra Tasks */}
       <Box>
         <Text fontSize="xl" fontWeight="bold" mb={1}>
-          Extra Tasks
+        Intive for Extra Rewards
         </Text>
         {/* Task 3 */}
-        <TaskItem rewardAmount={100} title="Follow on X" icon="/twitter.svg" />
+        {/* <TaskItem rewardAmount={100} title="Follow on X" icon="/twitter.svg" /> */}
+        <Flex
+            bg="purple.700"
+            p={4}
+            borderRadius="md"
+            alignItems="center"
+            onClick={handleInviteFriend}
+          >
+            <Box bg="purple.800" p={2} borderRadius="md" boxSize="50px" mr={4}>
+              <Image src={"/twitter.svg"} />
+            </Box>
+            <Flex justify="space-between" w="100%">
+              <Box>
+                <Text fontSize="lg" fontWeight="semibold">
+                 Follow on X
+                </Text>
+                <Flex mt={1} alignItems="center">
+                  <Image src="/1067Coin.png" alt="Coin" boxSize="20px" mr={2} />
+                  <Text fontSize="md" mr={2}>
+                    2500
+                  </Text>
+                  <Image src="/key.png" alt="Key" boxSize="20px" ml={2} />
+                  <Text fontSize="md">2</Text>
+                </Flex>
+              </Box>
+              <Icon as={FaChevronRight} />
+            </Flex>
+          </Flex>
       </Box>
 
       <Spacer />
       <Flex align="center" justify="center" p={5} onClick={handleInviteFriend}>
         <Button rounded={"full"} bg="#4C49FF" color="#fff">
           Send Invite
-        </Button>
+        </Button> 
       </Flex>
     </Box>
   );
 };
 
-interface TaskItemProps {
-  title: string;
-  rewardAmount: number;
-  icon: string;
-}
+// interface TaskItemProps {
+//   title: string;
+//   rewardAmount: number;
+//   icon: string;
+// }
 
-const TaskItem: React.FC<TaskItemProps> = ({
-  title,
-  rewardAmount,
-  icon,
-}) => {
-  return (
-    <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center">
-      <Box bg="purple.800" p={2} borderRadius="md" boxSize="50px" mr={4} />
-      <Flex justify="space-between" w="100%">
-        <Box>
-          <Text fontSize="lg" fontWeight="semibold">
-            {title}
-          </Text>
-          <Flex mt={1} alignItems="center">
-            <Image src={icon} alt="Coin" boxSize="20px" mr={2} />
-            <Text fontSize="md" mr={2}>
-              {rewardAmount.toLocaleString()}
-            </Text>
+// const TaskItem: React.FC<TaskItemProps> = ({
+//   title,
+//   rewardAmount,
+//   icon,
+// }) => {
+//   return (
+//     <Flex bg="purple.700" p={4} borderRadius="md" alignItems="center">
+//       <Box bg="purple.800" p={2} borderRadius="md" boxSize="50px" mr={4} />
+//       <Flex justify="space-between" w="100%">
+//         <Box>
+//           <Text fontSize="lg" fontWeight="semibold">
+//             {title}
+//           </Text>
+//           <Flex mt={1} alignItems="center">
+//             <Image src={icon} alt="Coin" boxSize="20px" mr={2} />
+//             <Text fontSize="md" mr={2}>
+//               {rewardAmount.toLocaleString()}
+//             </Text>
           
-          </Flex>
-        </Box>
-        <Icon as={FaChevronRight} />
-      </Flex>
-    </Flex>
-  );
-};
+//           </Flex>
+//         </Box>
+//         <Icon as={FaChevronRight} />
+//       </Flex>
+//     </Flex>
+//   );
+// };
 
 export default FrenScreen;

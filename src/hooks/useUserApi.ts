@@ -183,6 +183,7 @@ const refillTaps = async () => {
       throw err;
     } finally {
       setLoading(false);
+      
     }
   };
 

@@ -11,12 +11,13 @@ import {
   // Spacer,
   VStack,
   HStack,
-  Circle,
-  Icon,
+  // Circle,
+  // Icon,
+  Image,
 } from "@chakra-ui/react";
-import { FaHome, FaTrophy, FaUserFriends } from "react-icons/fa";
+import { FaHome, FaTrophy } from "react-icons/fa";
 // import { FaChartSimple } from "react-icons/fa6";
-import { GiFireAxe } from "react-icons/gi";
+// import { GiFireAxe } from "react-icons/gi";
 import { HiOutlineSparkles } from "react-icons/hi";
 // import { HiOutlineBolt } from "react-icons/hi2";
 // import { BiWorld } from "react-icons/bi";
@@ -24,8 +25,12 @@ import { HiOutlineSparkles } from "react-icons/hi";
 // import { RxRocket } from "react-icons/rx";
 import EarnScreen from "./earnScreen";
 import RankScreen from "./rankScreen";
-import FrenScreen from "./frenScreen";
+// import FrenScreen from "./frenScreen";
 import HomeScreen from "./homeScreen";
+import HomeSvg from "../assets/home.svg";
+import EarnSvg from "../assets/spark.svg";
+import RankSvg from "../assets/trophy.svg";
+
 
 
 // Define the types for components
@@ -33,6 +38,7 @@ import HomeScreen from "./homeScreen";
 
 type MenuItem = {
   icon: React.ElementType;
+  svgFile:string;
   label: string;
   key: string;
   component: React.FC;
@@ -43,21 +49,21 @@ const HomePage = ({userData}: {userData: any}) => {
     <HomeScreen userData={userData} setActivePage={setActivePage} />
   );
   const Earn: React.FC = () => <EarnScreen userData={userData} />;
-  const Mine: React.FC = () => <Text></Text>;
+  // const Mine: React.FC = () => <Text></Text>;
   const Rank: React.FC = () => <RankScreen userData={userData} />;
-  const Frens: React.FC = () => <FrenScreen userData={userData} />;
+  // const Frens: React.FC = () => <FrenScreen userData={userData} />;
 
   const menuItems: MenuItem[] = [
-    { icon: FaHome, label: "HOME", key: "home", component: Home },
-    { icon: HiOutlineSparkles, label: "EARN", key: "earn", component: Earn },
-    { icon: GiFireAxe, label: "MINE", key: "mine", component: Mine },
-    { icon: FaTrophy, label: "RANK", key: "rank", component: Rank },
-    {
-      icon: FaUserFriends,
-      label: "FRENS",
-      key: "frens",
-      component: Frens,
-    },
+    { icon: FaHome, svgFile :HomeSvg, label: "HOME", key: "home", component: Home },
+    { icon: HiOutlineSparkles, svgFile :EarnSvg, label: "EARN", key: "earn", component: Earn },
+    // { icon: GiFireAxe, label: "MINE", key: "mine", component: Mine },
+    { icon: FaTrophy, svgFile :RankSvg, label: "RANK", key: "rank", component: Rank },
+    // {
+    //   icon: FaUserFriends,
+    //   label: "FRENS",
+    //   key: "frens",
+    //   component: Frens,
+    // },
   ];
 
   const renderContent = (): JSX.Element => {
@@ -69,7 +75,9 @@ const HomePage = ({userData}: {userData: any}) => {
   return (
     <>
       <Box
-        bgGradient="linear(to-b, gray.900, purple.900)"
+        bgGradient="linear-gradient(360deg, #18004A 24.72%, #000 100%)"
+        // background: ;
+
         p={4}
         color="white"
         minH="100vh"
@@ -79,26 +87,43 @@ const HomePage = ({userData}: {userData: any}) => {
 
         {/* Bottom Navigation */}
         <HStack
-          justify="space-around"
+          justify="space-between"
           p={2}
           bg="#7371FC99"
           as="nav"
           borderColor="#CDC1FF"
           borderRadius="2xl"
           border={"2px solid"}
+
         >
-          {menuItems.map(({ icon, label, key }) => (
-            <VStack key={key} spacing={1}>
-              <Circle
-                size="40px"
-                bg={activePage === key ? "#CDC1FF80" : "#7371FC99"}
-                as="button"
-                onClick={() => setActivePage(key)}
-              >
-                <Icon as={icon} boxSize={5} />
-              </Circle>
-              <Text fontSize="xs">{label}</Text>
-            </VStack>
+          {menuItems.map(({ svgFile, label, key }) => (
+             <VStack key={key} spacing={1}>
+             <Box
+               as="button"
+               width="60px" 
+               height="60px" 
+               bg={activePage === key ? "#CDC1FF80" : ""}
+               borderRadius="8px" 
+               display="flex"
+               flexDirection={'column'}
+               justifyContent="center"
+               alignItems="center"
+               gap="5px"
+               onClick={() => setActivePage(key)}
+             >
+
+               {/* <Icon as={icon} boxSize={8} /> */}
+               <Image
+                    src={svgFile}
+                    alt="Icon"
+                    width={'28px'}
+                    height={"28px"}
+                  // objectFit="cover" 
+                  />
+
+             <Text fontSize="xs">{label}</Text>
+             </Box>
+           </VStack>
           ))}
         </HStack>
        
